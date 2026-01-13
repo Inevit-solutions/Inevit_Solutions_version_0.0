@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NAV_ITEMS, SOCIAL_LINKS } from '../constants';
 import { PageView } from '../types';
-import { Menu, X, ArrowUp, Send, Github, Twitter, Linkedin, Youtube, Globe } from 'lucide-react';
+import { Menu, X, ArrowUp, Send, Github, Twitter, Linkedin, Youtube, Globe, Instagram } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
 
@@ -275,6 +275,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                       {link.platform === 'Twitter / X' && <Twitter size={14} className="group-hover:text-blue-400 transition-colors" />}
                       {link.platform === 'LinkedIn' && <Linkedin size={14} className="group-hover:text-blue-600 transition-colors" />}
                       {link.platform === 'YouTube' && <Youtube size={14} className="group-hover:text-red-500 transition-colors" />}
+                      {link.platform === 'Instagram' && <Instagram size={14} className="group-hover:text-pink-500 transition-colors" />}
                       <span>{link.platform}</span>
                     </a>
                   </li>

@@ -153,8 +153,8 @@ export const YOUTUBE_VIDEOS: Video[] = [
 ];
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { platform: 'YouTube', handle: '@IneveitSystems', link: '#' },
+  { platform: 'YouTube', handle: '@IneveitSystems', link: 'https://www.youtube.com/channel/UCNs0B1s8jFRu7CFfy2IBBug' },
   { platform: 'LinkedIn', handle: 'Ineveit Solutions', link: '#' },
-  { platform: 'Twitter / X', handle: '@ineveit_io', link: '#' },
-  { platform: 'GitHub', handle: 'ineveit-open-source', link: '#' },
+  { platform: 'Instagram', handle: '@inevitsolutions', link: 'https://www.instagram.com/inevitsolutions/' },
+  { platform: 'Twitter / X', handle: '@InevitSolutions', link: 'https://x.com/InevitSolutions' },
 ];
