@@ -8,7 +8,6 @@ const Process: React.FC = () => {
     <div className="min-h-screen pt-12 pb-24 relative">
         <BackgroundCanvas variant="process" />
         {/* Central line */}
-        <div className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-px bg-subtle z-0"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-24 py-8 relative">
@@ -30,9 +29,17 @@ const Process: React.FC = () => {
                         {/* Timeline Node */}
                         <div className="hidden md:flex w-full md:w-1/2 justify-end items-center px-12 relative">
                              {/* Connector handled by absolute positioning in CSS if needed, purely layout here */}
-                             <div className={`text-right w-full ${idx % 2 === 1 ? 'text-left' : ''}`}>
-                                <span className="text-6xl font-bold text-subtle/50 font-mono block">{step.number}</span>
-                             </div>
+                                <motion.span 
+                                    className="text-6xl font-bold font-mono block"
+                                    initial={{ color: "rgba(255, 255, 255, 0.1)", textShadow: "none" }}
+                                    whileInView={{ 
+                                        color: "#F4B400" 
+                                    }}
+                                    viewport={{ once: true, margin: "-50% 0px -50% 0px" }}
+                                    transition={{ duration: 0.8 }}
+                                >
+                                    {step.number}
+                                </motion.span>
                         </div>
 
                         {/* Mobile Node Replacement */}
@@ -56,7 +63,10 @@ const Process: React.FC = () => {
             <div className="mt-32 text-center">
                  <div className="inline-block p-6 border border-subtle bg-surface/80 backdrop-blur-sm">
                      <p className="text-text-muted mb-4 font-mono text-sm">Ready to start discovery?</p>
-                     <button className="px-8 py-3 bg-white text-black hover:bg-gray-200 transition-colors font-semibold text-sm tracking-wide">
+                     <button 
+                        onClick={() => window.open('https://cal.com/inevit-solutions-k1ow7a/30min', '_blank')}
+                        className="px-8 py-3 bg-white text-black hover:bg-gray-200 transition-colors font-semibold text-sm tracking-wide"
+                     >
                         INITIATE PROCESS
                      </button>
                  </div>

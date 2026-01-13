@@ -9,7 +9,6 @@ import Blog from './pages/Blog';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import BootSequence from './components/BootSequence';
-import { SoundProvider } from './components/SoundContext';
 import { PageView } from './types';
 import { AnimatePresence } from 'framer-motion';
 
@@ -40,7 +39,7 @@ function App() {
   };
 
   return (
-    <SoundProvider>
+    <>
       <AnimatePresence mode="wait">
         {!bootComplete && (
            <BootSequence onComplete={() => setBootComplete(true)} />
@@ -52,7 +51,7 @@ function App() {
           {renderPage()}
         </Layout>
       )}
-    </SoundProvider>
+    </>
   );
 }
 

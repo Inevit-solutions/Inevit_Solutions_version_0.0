@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSound } from './SoundContext';
+
 
 interface BootSequenceProps {
   onComplete: () => void;
 }
 
 const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
-  const { play } = useSound();
+
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<'loading' | 'welcome'>('loading');
   const [logIndex, setLogIndex] = useState(0);
@@ -25,7 +25,7 @@ const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
   ];
 
   useEffect(() => {
-    play('boot');
+
 
     const duration = 1800; // Total boot time ms
     const startTime = Date.now();
@@ -45,12 +45,12 @@ const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
         clearInterval(interval);
         // Transition to Welcome Phase
         setPhase('welcome');
-        play('success');
+
       }
     }, 16);
 
     return () => clearInterval(interval);
-  }, [play]);
+  }, []);
 
   // Handle Welcome Phase Animation
   useEffect(() => {

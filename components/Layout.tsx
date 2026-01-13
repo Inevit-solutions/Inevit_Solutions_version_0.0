@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NAV_ITEMS, SOCIAL_LINKS } from '../constants';
 import { PageView } from '../types';
-import { Menu, X, ArrowUp, Send, Github, Twitter, Linkedin, Youtube, Globe, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X, ArrowUp, Send, Github, Twitter, Linkedin, Youtube, Globe } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { useSound } from './SoundContext';
+
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -36,7 +36,7 @@ const ServerClock = () => {
 const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const { play, isMuted, toggleMute } = useSound();
+
   
   // Scroll Progress
   const { scrollYProgress } = useScroll();
@@ -60,14 +60,12 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
   }, []);
 
   const handleNavClick = (page: PageView) => {
-    play('click');
     setIsMobileMenuOpen(false);
     onNavigate(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const scrollToTop = () => {
-    play('click');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -87,7 +85,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
           {/* Left: Logo */}
           <button 
             onClick={() => handleNavClick('home')} 
-            onMouseEnter={() => play('hover')}
             className="flex items-center gap-3 group"
           >
              <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden">
@@ -111,7 +108,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                onMouseEnter={() => play('hover')}
                 className={`text-sm font-medium transition-all duration-300 relative group ${
                   currentPage === item.id ? 'text-gold' : 'text-text-muted hover:text-white'
                 }`}
@@ -127,27 +123,19 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
 
           {/* Right: CTA, Mute & Mobile Toggle */}
           <div className="flex items-center gap-3">
-             {/* Sound Toggle */}
-             <button
-               onClick={() => { toggleMute(); play('click'); }}
-               className="w-8 h-8 flex items-center justify-center rounded-full text-text-muted hover:text-white hover:bg-white/10 transition-colors"
-               title={isMuted ? "Unmute Sound" : "Mute Sound"}
-             >
-               {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-             </button>
+
 
              <button
-               onClick={() => handleNavClick('contact')}
-               onMouseEnter={() => play('hover')}
+               onClick={() => window.open('https://cal.com/inevit-solutions-k1ow7a/30min', '_blank')}
                className="hidden md:block px-6 py-2.5 bg-white text-black rounded-full text-xs font-bold uppercase tracking-wider hover:bg-gold hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,180,0,0.3)]"
             >
-              Start Project
+              Get Started
             </button>
 
             {/* Mobile Menu Toggle */}
             <button
               className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen); play('click'); }}
+              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen); }}
             >
               {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -176,10 +164,10 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
               </button>
             ))}
             <button
-               onClick={() => handleNavClick('contact')}
+               onClick={() => window.open('https://cal.com/inevit-solutions-k1ow7a/30min', '_blank')}
                className="mt-8 px-10 py-4 bg-white text-black rounded-full font-bold uppercase tracking-widest hover:bg-gold transition-colors duration-300 shadow-lg shadow-white/10"
             >
-              Start Project
+              Get Started
             </button>
           </motion.div>
         )}
@@ -239,7 +227,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                   <li key={item.id}>
                     <button 
                       onClick={() => handleNavClick(item.id)}
-                      onMouseEnter={() => play('hover')}
                       className="text-text-secondary hover:text-gold transition-colors text-sm flex items-center gap-2 group"
                     >
                       <span className="w-1 h-1 bg-white/20 rounded-full group-hover:bg-gold transition-colors"></span>
@@ -260,7 +247,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                       href={link.link} 
                       target="_blank"
                       rel="noopener noreferrer"
-                      onMouseEnter={() => play('hover')}
                       className="text-text-secondary hover:text-white transition-colors text-sm flex items-center gap-2 group"
                     >
                       {link.platform === 'GitHub' && <Github size={14} className="group-hover:text-violet transition-colors" />}
@@ -287,8 +273,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                     className="flex-1 bg-white/5 border border-white/10 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold/50 focus:bg-white/10 transition-all placeholder:text-white/20"
                  />
                  <button 
-                    onMouseEnter={() => play('hover')}
-                    className="px-4 py-3 bg-white text-black rounded hover:bg-gold transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(244,180,0,0.4)]"
+                     className="px-4 py-3 bg-white text-black rounded hover:bg-gold transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(244,180,0,0.4)]"
                  >
                     <Send size={16} />
                  </button>
@@ -319,7 +304,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={scrollToTop}
-            onMouseEnter={() => play('hover')}
             className="fixed bottom-8 right-8 z-50 p-4 bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-gold hover:text-black transition-all duration-300 shadow-lg shadow-black/50 group"
           >
             <ArrowUp size={20} className="group-hover:-translate-y-1 transition-transform" />
