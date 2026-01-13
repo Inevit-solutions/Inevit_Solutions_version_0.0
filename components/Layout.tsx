@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NAV_ITEMS, SOCIAL_LINKS } from '../constants';
 import { PageView } from '../types';
 import { Menu, X, ArrowUp, Send, Github, Twitter, Linkedin, Youtube, Globe } from 'lucide-react';
@@ -36,6 +36,28 @@ const ServerClock = () => {
 const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const newsletterRef = useRef<HTMLInputElement>(null);
+
+  const handleSubscribe = async () => {
+    const email = newsletterRef.current?.value;
+    if (!email) return;
+    try {
+        const res = await fetch('http://localhost:5000/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        if (res.ok) {
+            alert("System Synchronized. You are now subscribed.");
+            if (newsletterRef.current) newsletterRef.current.value = "";
+        } else {
+             alert("Subscription failed.");
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Network error.");
+    }
+  };
 
   
   // Scroll Progress
@@ -268,11 +290,13 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                </p>
                <div className="flex gap-2">
                  <input 
+                    ref={newsletterRef}
                     type="email" 
                     placeholder="Enter email address"
                     className="flex-1 bg-white/5 border border-white/10 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-gold/50 focus:bg-white/10 transition-all placeholder:text-white/20"
                  />
                  <button 
+                     onClick={handleSubscribe}
                      className="px-4 py-3 bg-white text-black rounded hover:bg-gold transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(244,180,0,0.4)]"
                  >
                     <Send size={16} />

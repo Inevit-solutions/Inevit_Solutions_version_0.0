@@ -40,13 +40,41 @@ const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [copied, setCopied] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    // Simulate network request
-    setTimeout(() => {
-      setStatus('success');
-    }, 2000);
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        organization: formData.get('organization'),
+        interest: formData.get('interest'),
+        message: formData.get('message')
+    };
+
+    try {
+        const response = await fetch('http://localhost:5000/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            setStatus('success');
+        } else {
+             console.error("Submission failed");
+             setStatus('idle'); // Or error state
+             alert("Transmission failed. Please try again.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+         setStatus('idle');
+         alert("Network error. Check connection.");
+    }
   };
 
   const copyEmail = () => {
@@ -132,6 +160,7 @@ const Contact: React.FC = () => {
                             <label className="text-xs font-mono uppercase tracking-widest text-text-muted">Identity</label>
                             <input 
                                 type="text" 
+                                name="name"
                                 required
                                 className="w-full bg-black/40 border border-white/10 p-4 text-white focus:outline-none focus:border-violet/50 transition-colors rounded hover:border-white/20"
                                 placeholder="Name"
@@ -141,6 +170,7 @@ const Contact: React.FC = () => {
                             <label className="text-xs font-mono uppercase tracking-widest text-text-muted">Contact Point</label>
                             <input 
                                 type="email" 
+                                name="email"
                                 required
                                 className="w-full bg-black/40 border border-white/10 p-4 text-white focus:outline-none focus:border-violet/50 transition-colors rounded hover:border-white/20"
                                 placeholder="Email Address"
@@ -152,9 +182,26 @@ const Contact: React.FC = () => {
                          <label className="text-xs font-mono uppercase tracking-widest text-text-muted">Organization</label>
                          <input 
                                 type="text" 
+                                name="organization"
                                 className="w-full bg-black/40 border border-white/10 p-4 text-white focus:outline-none focus:border-violet/50 transition-colors rounded hover:border-white/20"
                                 placeholder="Company URL (Optional)"
                             />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-xs font-mono uppercase tracking-widest text-text-muted">Interest</label>
+                        <select 
+                            required
+                            name="interest"
+                            className="w-full bg-black/40 border border-white/10 p-4 text-white focus:outline-none focus:border-violet/50 transition-colors rounded hover:border-white/20 appearance-none"
+                            style={{ backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 1rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
+                        >
+                            <option value="" disabled selected className="text-gray-500">Select area of interest</option>
+                            <option value="Automation" className="bg-obsidian">Automation</option>
+                            <option value="System Architecture" className="bg-obsidian">System Architecture</option>
+                            <option value="RAG chatbot" className="bg-obsidian">RAG chatbot</option>
+                            <option value="Other" className="bg-obsidian">Other</option>
+                        </select>
                     </div>
 
                     <div className="space-y-2">
@@ -162,6 +209,7 @@ const Contact: React.FC = () => {
                         <textarea 
                             rows={6}
                             required
+                            name="message"
                             className="w-full bg-black/40 border border-white/10 p-4 text-white focus:outline-none focus:border-violet/50 transition-colors rounded hover:border-white/20 resize-none"
                             placeholder="Describe the friction in your current workflow or the system you wish to build..."
                         ></textarea>
