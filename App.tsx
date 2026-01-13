@@ -1,0 +1,59 @@
+import React, { useState } from 'react';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Work from './pages/Work';
+import Services from './pages/Services';
+import Process from './pages/Process';
+import Blog from './pages/Blog';
+
+import About from './pages/About';
+import Contact from './pages/Contact';
+import BootSequence from './components/BootSequence';
+import { SoundProvider } from './components/SoundContext';
+import { PageView } from './types';
+import { AnimatePresence } from 'framer-motion';
+
+function App() {
+  const [currentPage, setCurrentPage] = useState<PageView>('home');
+  const [bootComplete, setBootComplete] = useState(false);
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <Home onNavigate={setCurrentPage} />;
+      case 'work':
+        return <Work />;
+      case 'services':
+        return <Services />;
+      case 'process':
+        return <Process />;
+      case 'blog':
+        return <Blog />;
+
+      case 'about':
+        return <About />;
+      case 'contact':
+        return <Contact />;
+      default:
+        return <Home onNavigate={setCurrentPage} />;
+    }
+  };
+
+  return (
+    <SoundProvider>
+      <AnimatePresence mode="wait">
+        {!bootComplete && (
+           <BootSequence onComplete={() => setBootComplete(true)} />
+        )}
+      </AnimatePresence>
+      
+      {bootComplete && (
+        <Layout currentPage={currentPage} onNavigate={setCurrentPage}>
+          {renderPage()}
+        </Layout>
+      )}
+    </SoundProvider>
+  );
+}
+
+export default App;
