@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || '*', // In production, set FRONTEND_URL to your Vercel domain
+  origin: '*', // Temporarily allow all to rule out CORS issues
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));

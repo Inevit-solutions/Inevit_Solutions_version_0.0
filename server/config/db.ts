@@ -22,8 +22,10 @@ if (!cached) {
 }
 
 const connectDB = async () => {
-  if (process.env.MONGO_URI === undefined) {
-      throw new Error("MONGO_URI is not defined in environment variables");
+  const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGO_URI;
+
+  if (!MONGODB_URI) {
+      throw new Error("MONGODB_URI is not defined in environment variables");
   }
 
   if (cached.conn) {
@@ -35,7 +37,7 @@ const connectDB = async () => {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(process.env.MONGO_URI, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log("MongoDB Connected (New Connection)");
       return mongoose;
     });
