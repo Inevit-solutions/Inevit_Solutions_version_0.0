@@ -63,17 +63,29 @@ const Contact: React.FC = () => {
             body: JSON.stringify(data),
         });
 
+        const contentType = response.headers.get("content-type");
+        let errorMessage = "Transmission failed. Please try again.";
+        
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            const data = await response.json();
+            errorMessage = data.message || errorMessage;
+        } else if (!response.ok) {
+            const text = await response.text();
+            errorMessage = `Server error (${response.status}): ${text.substring(0, 100)}`;
+        }
+
         if (response.ok) {
             setStatus('success');
         } else {
-             console.error("Submission failed");
-             setStatus('idle'); // Or error state
-             alert("Transmission failed. Please try again.");
+             console.error("Submission failed:", errorMessage);
+             setStatus('idle');
+             alert(`Transmission Error: ${errorMessage}`);
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error:", error);
-         setStatus('idle');
-         alert("Network error. Check connection.");
+        setStatus('idle');
+        const errorMsg = error.message || "Network error. Check connection.";
+        alert(`Transmission Error: ${errorMsg}`);
     }
   };
 

@@ -51,9 +51,26 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
     }
 
     return res.status(201).json({ message: 'Transmission received' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: `Server error: ${(error as any).message}` });
+  } catch (error: any) {
+    console.error('Contact API Error:', error);
+    
+    // Provide more specific error messages
+    let errorMessage = 'A server error has occurred';
+    
+    if (error.message?.includes('MONGODB_URI') || error.message?.includes('MONGO_URI')) {
+      errorMessage = 'Database configuration error: MongoDB connection string is missing or invalid';
+    } else if (error.message?.includes('timeout') || error.message?.includes('ECONNREFUSED')) {
+      errorMessage = 'Database connection failed: Unable to reach MongoDB server. Please check network settings and IP whitelist.';
+    } else if (error.message?.includes('duplicate key') || error.code === 11000) {
+      errorMessage = 'This email has already been registered';
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+    
+    return res.status(500).json({ 
+      message: errorMessage,
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
