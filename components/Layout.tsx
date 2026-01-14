@@ -149,7 +149,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
           >
              <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden rounded-full bg-transparent">
                  <img 
-                    src="/Leo.png" 
+                    src="/Leo_new.png" 
                     alt="Inevit Logo" 
                     className="w-full h-full object-cover rounded-full transform group-hover:scale-110 transition-transform duration-500"
                     style={{ backgroundColor: 'transparent' }}
