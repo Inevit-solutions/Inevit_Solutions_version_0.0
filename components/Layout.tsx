@@ -63,7 +63,8 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
         } else {
              const text = await res.text();
              console.error("Non-JSON response:", text);
-             throw new Error(`Server error (${res.status}). See console.`);
+             // Show a snippet of the error in the alert to help debugging
+             throw new Error(`Server error (${res.status}): ${text.substring(0, 100)}...`);
         }
         
         if (res.ok) {
