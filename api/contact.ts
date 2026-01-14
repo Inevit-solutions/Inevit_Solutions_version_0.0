@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getClientsCollection } from './lib/models.js';
+import { getClientsCollection, getSubscribersCollection } from './lib/models.js';
 
 export default async function handler(
   request: VercelRequest,
@@ -63,16 +63,33 @@ export default async function handler(
       });
     }
 
-    // Insert client submission
+    // Normalize email (lowercase)
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Insert client submission (always save, even if duplicate)
     const clientsCollection = await getClientsCollection();
     const result = await clientsCollection.insertOne({
       name: name.trim(),
-      email: email.toLowerCase().trim(),
+      email: normalizedEmail,
       organization: organization ? organization.trim() : undefined,
       interest: interest.trim(),
       message: message.trim(),
       submittedAt: new Date(),
     });
+
+    // Check if email exists in Subscribers, if not, add it
+    const subscribersCollection = await getSubscribersCollection();
+    const existingSubscriber = await subscribersCollection.findOne({ 
+      email: normalizedEmail 
+    });
+
+    if (!existingSubscriber) {
+      // Email not in subscribers, add it
+      await subscribersCollection.insertOne({
+        email: normalizedEmail,
+        subscribedAt: new Date(),
+      });
+    }
 
     return response.status(201).json({ 
       success: true,
