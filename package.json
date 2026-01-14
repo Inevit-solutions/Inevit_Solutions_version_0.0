@@ -11,21 +11,13 @@
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.4.2",
-    "@vercel/node": "^5.5.19",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
-    "mongoose": "^8.10.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "three": "^0.182.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/mongoose": "^5.11.96",
     "@types/node": "^22.19.6",
     "@vitejs/plugin-react": "^5.0.0",
     "ts-node": "^10.9.2",

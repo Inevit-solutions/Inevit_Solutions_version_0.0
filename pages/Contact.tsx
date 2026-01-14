@@ -46,6 +46,10 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setStatus('submitting');
 
+    // Simulate form processing delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Form data is collected but not sent to backend
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const data = {
@@ -56,39 +60,11 @@ const Contact: React.FC = () => {
         message: formData.get('message')
     };
 
-    try {
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-
-        const contentType = response.headers.get("content-type");
-        let errorMessage = "Transmission failed. Please try again.";
-        
-        if (contentType && contentType.indexOf("application/json") !== -1) {
-            const data = await response.json();
-            errorMessage = data.message || errorMessage;
-        } else if (!response.ok) {
-            const text = await response.text();
-            errorMessage = `Server error (${response.status}): ${text.substring(0, 100)}`;
-        }
-
-        if (response.ok) {
-            setStatus('success');
-        } else {
-             console.error("Submission failed:", errorMessage);
-             setStatus('idle');
-             alert(`Transmission Error: ${errorMessage}`);
-        }
-    } catch (error: any) {
-        console.error("Error:", error);
-        setStatus('idle');
-        const errorMsg = error.message || "Network error. Check connection.";
-        alert(`Transmission Error: ${errorMsg}`);
-    }
+    // Just show success - no backend storage
+    setStatus('success');
+    
+    // Reset form after showing success
+    form.reset();
   };
 
   const copyEmail = () => {
