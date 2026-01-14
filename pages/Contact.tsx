@@ -65,15 +65,36 @@ const Contact: React.FC = () => {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
-        setStatus('success');
-        form.reset();
-      } else {
-        alert(result.message || 'Failed to submit. Please try again.');
+      // Check if response is ok
+      if (!response.ok) {
+        // Try to parse error response
+        let errorMessage = 'Failed to submit. Please try again.';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          // If response is not JSON, use status text
+          errorMessage = response.statusText || errorMessage;
+        }
+        alert(errorMessage);
         setStatus('idle');
+        return;
       }
+
+      // Parse successful response
+      let result;
+      try {
+        const text = await response.text();
+        result = text ? JSON.parse(text) : {};
+      } catch (parseError) {
+        console.error('Failed to parse response:', parseError);
+        alert('Received invalid response from server.');
+        setStatus('idle');
+        return;
+      }
+
+      setStatus('success');
+      form.reset();
     } catch (error) {
       console.error('Contact form error:', error);
       alert('Network error. Please check your connection and try again.');

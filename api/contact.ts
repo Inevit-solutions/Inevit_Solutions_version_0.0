@@ -71,8 +71,17 @@ export default async function handler(
       id: result.insertedId.toString()
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in contact API:', error);
+    
+    // Check if it's a MongoDB connection error
+    if (error?.message?.includes('MONGODB_URI') || error?.message?.includes('connection')) {
+      return response.status(500).json({ 
+        error: 'Database connection error',
+        message: 'Database is not available. Please check server configuration.' 
+      });
+    }
+    
     return response.status(500).json({ 
       error: 'Internal server error',
       message: 'Failed to submit contact form. Please try again later.' 

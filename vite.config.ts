@@ -8,13 +8,15 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 3000,
         host: '0.0.0.0',
-        proxy: {
-          '/api': {
-            target: 'http://localhost:5000',
-            changeOrigin: true,
-            secure: false
-          }
-        },
+        // Proxy removed - Vercel dev handles API routes automatically
+        // If using vite directly, uncomment and point to your API server
+        // proxy: {
+        //   '/api': {
+        //     target: 'http://localhost:3000',
+        //     changeOrigin: true,
+        //     secure: false
+        //   }
+        // },
       },
       plugins: [react()],
       define: {

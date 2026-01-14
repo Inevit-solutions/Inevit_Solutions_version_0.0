@@ -58,14 +58,34 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
         body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("System Synchronized. You are now subscribed.");
-        if (newsletterRef.current) newsletterRef.current.value = "";
-      } else {
-        alert(data.message || "Failed to subscribe. Please try again.");
+      // Check if response is ok and has content
+      if (!response.ok) {
+        // Try to parse error response
+        let errorMessage = "Failed to subscribe. Please try again.";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          // If response is not JSON, use status text
+          errorMessage = response.statusText || errorMessage;
+        }
+        alert(errorMessage);
+        return;
       }
+
+      // Parse successful response
+      let data;
+      try {
+        const text = await response.text();
+        data = text ? JSON.parse(text) : {};
+      } catch (parseError) {
+        console.error('Failed to parse response:', parseError);
+        alert("Received invalid response from server.");
+        return;
+      }
+
+      alert("System Synchronized. You are now subscribed.");
+      if (newsletterRef.current) newsletterRef.current.value = "";
     } catch (error) {
       console.error('Subscription error:', error);
       alert("Network error. Please check your connection and try again.");
