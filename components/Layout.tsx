@@ -38,24 +38,36 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
   const [showBackToTop, setShowBackToTop] = useState(false);
   const newsletterRef = useRef<HTMLInputElement>(null);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubscribe = async () => {
     const email = newsletterRef.current?.value;
-    if (!email) return;
+    if (!email) {
+        alert("Please enter a valid email address.");
+        return;
+    }
+    
+    setIsSubmitting(true);
     try {
         const res = await fetch('/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
         });
+        
+        const data = await res.json();
+        
         if (res.ok) {
-            alert("System Synchronized. You are now subscribed.");
+            alert(data.message || "System Synchronized. You are now subscribed.");
             if (newsletterRef.current) newsletterRef.current.value = "";
         } else {
-             alert("Subscription failed.");
+             alert(data.message || "Subscription failed. Please try again.");
         }
     } catch (e) {
         console.error(e);
-        alert("Network error.");
+        alert("Network error. Please check your connection.");
+    } finally {
+        setIsSubmitting(false);
     }
   };
 
@@ -298,9 +310,10 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                  />
                  <button 
                      onClick={handleSubscribe}
-                     className="px-4 py-3 bg-white text-black rounded hover:bg-gold transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(244,180,0,0.4)]"
+                     disabled={isSubmitting}
+                     className="px-4 py-3 bg-white text-black rounded hover:bg-gold transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(244,180,0,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
                  >
-                    <Send size={16} />
+                    {isSubmitting ? <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"/> : <Send size={16} />}
                  </button>
                </div>
             </div>
