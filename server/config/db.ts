@@ -4,17 +4,51 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
+
+// Add strict type for global with mongoose
+declare global {
+  var mongoose: MongooseCache;
+}
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
 const connectDB = async () => {
-  try {
-    if (!process.env.MONGO_URI) {
-        throw new Error("MONGO_URI is not defined in environment variables");
-    }
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error: any) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+  if (process.env.MONGO_URI === undefined) {
+      throw new Error("MONGO_URI is not defined in environment variables");
   }
+
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(process.env.MONGO_URI, opts).then((mongoose) => {
+      console.log("MongoDB Connected (New Connection)");
+      return mongoose;
+    });
+  }
+  
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
+  return cached.conn;
 };
 
 export default connectDB;
