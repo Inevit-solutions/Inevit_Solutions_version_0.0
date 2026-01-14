@@ -24,6 +24,26 @@
       ]
     },
     "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "maxNodeModuleJsDepth": 0
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "api/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".vercel",
+    ".tsbuildinfo",
+    "server",
+    "Removed",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ]
 }

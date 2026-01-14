@@ -33,16 +33,22 @@ export default defineConfig(({ mode }) => {
             manualChunks: (id) => {
               // Split node_modules into smaller chunks
               if (id.includes('node_modules')) {
+                // Three.js and related libraries (largest, separate chunk)
                 if (id.includes('three') || id.includes('@react-three')) {
                   return 'three-vendor';
                 }
-                if (id.includes('react') || id.includes('react-dom')) {
-                  return 'react-vendor';
+                // React core (must be separate to avoid circular deps)
+                if (id.includes('react') && !id.includes('react-dom')) {
+                  return 'react-core';
                 }
+                if (id.includes('react-dom')) {
+                  return 'react-dom';
+                }
+                // Framer Motion (separate chunk)
                 if (id.includes('framer-motion')) {
                   return 'framer-vendor';
                 }
-                // Other node_modules go into a separate chunk
+                // Other node_modules go into a separate chunk (avoid circular deps)
                 return 'vendor';
               }
             }

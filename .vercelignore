@@ -1,0 +1,15 @@
+# Exclude from Vercel builds to reduce memory usage
+node_modules
+dist
+.server
+.vercel
+*.log
+.env.local
+.env.*.local
+tsconfig.tsbuildinfo
+.tsbuildinfo
+Removed
+server
+*.md
+!README.md
+
