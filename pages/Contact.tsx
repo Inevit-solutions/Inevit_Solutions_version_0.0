@@ -46,10 +46,6 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setStatus('submitting');
 
-    // Simulate form processing delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Form data is collected but not sent to backend
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const data = {
@@ -60,11 +56,29 @@ const Contact: React.FC = () => {
         message: formData.get('message')
     };
 
-    // Just show success - no backend storage
-    setStatus('success');
-    
-    // Reset form after showing success
-    form.reset();
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatus('success');
+        form.reset();
+      } else {
+        alert(result.message || 'Failed to submit. Please try again.');
+        setStatus('idle');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      alert('Network error. Please check your connection and try again.');
+      setStatus('idle');
+    }
   };
 
   const copyEmail = () => {

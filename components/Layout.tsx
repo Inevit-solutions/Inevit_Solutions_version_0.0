@@ -49,15 +49,29 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
     
     setIsSubmitting(true);
     
-    // Simulate processing delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Email is collected but not sent to backend
-    // Just show success message
-    alert("System Synchronized. You are now subscribed.");
-    if (newsletterRef.current) newsletterRef.current.value = "";
-    
-    setIsSubmitting(false);
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("System Synchronized. You are now subscribed.");
+        if (newsletterRef.current) newsletterRef.current.value = "";
+      } else {
+        alert(data.message || "Failed to subscribe. Please try again.");
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      alert("Network error. Please check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   
