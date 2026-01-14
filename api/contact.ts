@@ -54,7 +54,7 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
     return res.status(201).json({ message: 'Transmission received' });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: `Server error: ${(error as any).message}` });
   }
 };
 
