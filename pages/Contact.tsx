@@ -57,12 +57,8 @@ const Contact: React.FC = () => {
     };
 
     try {
-      // Use full URL for production, relative for local development
-      const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? '/api/contact'
-        : 'https://www.inevitsolutions.com/api/contact';
-      
-      const response = await fetch(apiUrl, {
+      // Use relative path - Vercel handles API routes automatically for SPA
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
