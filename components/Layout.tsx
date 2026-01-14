@@ -50,7 +50,12 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('/api/subscribe', {
+      // Use full URL for production, relative for local development
+      const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? '/api/subscribe'
+        : 'https://www.inevitsolutions.com/api/subscribe';
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

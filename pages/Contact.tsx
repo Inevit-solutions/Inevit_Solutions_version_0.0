@@ -57,7 +57,12 @@ const Contact: React.FC = () => {
     };
 
     try {
-      const response = await fetch('/api/contact', {
+      // Use full URL for production, relative for local development
+      const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? '/api/contact'
+        : 'https://www.inevitsolutions.com/api/contact';
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
