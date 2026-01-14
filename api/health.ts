@@ -15,9 +15,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const state = mongoose.connection.readyState;
     const states = ['disconnected', 'connected', 'connecting', 'disconnecting'];
 
-    // Try explicit connection if not connected
+    // Try explicit connection if not connected (1 = connected state)
     let connectionResult = 'Skipped';
-    if (state !== mongoose.ConnectionStates.connected) {
+    if (state !== 1) {
         try {
             await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
             connectionResult = 'Success';

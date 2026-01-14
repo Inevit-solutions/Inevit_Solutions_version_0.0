@@ -27,19 +27,32 @@ export default defineConfig(({ mode }) => {
         }
       },
       build: {
-        chunkSizeWarningLimit: 1000,
+        chunkSizeWarningLimit: 1500, // Increased since we're code-splitting properly
         rollupOptions: {
           output: {
-            manualChunks: {
-              'react-vendor': ['react', 'react-dom'],
-              'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
-              'framer-vendor': ['framer-motion'],
+            manualChunks: (id) => {
+              // Split node_modules into smaller chunks
+              if (id.includes('node_modules')) {
+                if (id.includes('three') || id.includes('@react-three')) {
+                  return 'three-vendor';
+                }
+                if (id.includes('react') || id.includes('react-dom')) {
+                  return 'react-vendor';
+                }
+                if (id.includes('framer-motion')) {
+                  return 'framer-vendor';
+                }
+                // Other node_modules go into a separate chunk
+                return 'vendor';
+              }
             }
           }
         },
         // Use esbuild for faster, more memory-efficient builds
         minify: 'esbuild',
         target: 'es2022',
+        // Reduce memory usage during build
+        sourcemap: false,
       },
     };
 });

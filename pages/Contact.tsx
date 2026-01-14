@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle, Mail, Terminal, Shield, Clock, MapPin, Copy, Calendar } from 'lucide-react';
-import ContactGlobe from '../components/ContactGlobe';
+
+// Lazy load Three.js component to reduce initial bundle size
+const ContactGlobe = React.lazy(() => import('../components/ContactGlobe'));
 
 // --- Components ---
 
@@ -98,7 +100,9 @@ const Contact: React.FC = () => {
   if (status === 'success') {
       return (
           <div className="min-h-screen pt-24 relative flex flex-col items-center justify-center text-center overflow-hidden">
-             <ContactGlobe />
+             <Suspense fallback={<div className="fixed inset-0 z-0" />}>
+               <ContactGlobe />
+             </Suspense>
              <div className="absolute inset-0 bg-obsidian/60 backdrop-blur-sm z-0" />
              <div className="relative z-10 max-w-lg mx-auto px-6 border border-gold/30 bg-black/50 p-12 rounded-2xl">
                 <motion.div 
@@ -128,7 +132,9 @@ const Contact: React.FC = () => {
     <div className="min-h-screen pt-24 pb-24 relative overflow-hidden">
       {/* Background */}
       <div className="fixed inset-0 z-0">
-         <ContactGlobe />
+         <Suspense fallback={<div className="fixed inset-0 z-0" />}>
+           <ContactGlobe />
+         </Suspense>
          {/* Gradients to ensure text readability */}
          <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent" />
          <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent" />

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { SERVICES } from '../constants';
-import BackgroundCanvas from '../components/BackgroundCanvas';
+
+// Lazy load Three.js component to reduce initial bundle size
+const BackgroundCanvas = React.lazy(() => import('../components/BackgroundCanvas'));
 
 const Services: React.FC = () => {
   return (
     <div className="min-h-screen pt-12 pb-24 relative">
-      <BackgroundCanvas variant="services" />
+      <Suspense fallback={<div className="fixed inset-0 z-0" />}>
+        <BackgroundCanvas variant="services" />
+      </Suspense>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="mb-24">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">Capabilities</h1>

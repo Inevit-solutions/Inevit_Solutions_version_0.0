@@ -34,8 +34,8 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
     // Connect to database first and ensure it's ready
     const mongooseInstance = await connectDB();
     
-    // Ensure connection is ready before using models
-    if (mongooseInstance.connection.readyState !== mongooseInstance.ConnectionStates.connected) {
+    // Ensure connection is ready before using models (1 = connected state)
+    if (mongooseInstance.connection.readyState !== 1) {
       throw new Error('Database connection is not ready');
     }
     

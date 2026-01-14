@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { PROCESS_STEPS } from '../constants';
-import BackgroundCanvas from '../components/BackgroundCanvas';
+
+// Lazy load Three.js component to reduce initial bundle size
+const BackgroundCanvas = React.lazy(() => import('../components/BackgroundCanvas'));
 
 const Process: React.FC = () => {
   return (
     <div className="min-h-screen pt-12 pb-24 relative">
-        <BackgroundCanvas variant="process" />
+        <Suspense fallback={<div className="fixed inset-0 z-0" />}>
+          <BackgroundCanvas variant="process" />
+        </Suspense>
         {/* Central line */}
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">

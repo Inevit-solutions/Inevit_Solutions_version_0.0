@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Cpu, GitMerge, ShieldCheck, TrendingUp, Activity, Code2, Database, Quote, Terminal } from 'lucide-react';
-import SystemCanvas from '../components/SystemCanvas';
 import { PageView } from '../types';
+
+// Lazy load Three.js component to reduce initial bundle size
+const SystemCanvas = React.lazy(() => import('../components/SystemCanvas'));
 
 interface HomeProps {
   onNavigate: (page: PageView) => void;
@@ -11,7 +13,9 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   return (
     <>
-      <SystemCanvas />
+      <Suspense fallback={<div className="fixed inset-0 z-0" />}>
+        <SystemCanvas />
+      </Suspense>
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
