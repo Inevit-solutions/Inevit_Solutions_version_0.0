@@ -54,10 +54,10 @@ const connectDB = async () => {
     cached.conn = await cached.promise;
     
     // Ensure connection is ready before returning
-    if (cached.conn.connection.readyState !== 1) {
+    if (cached.conn.connection.readyState !== mongoose.ConnectionStates.connected) {
       // Connection is not ready, wait a bit and check again
       await new Promise(resolve => setTimeout(resolve, 100));
-      if (cached.conn.connection.readyState !== 1) {
+      if (cached.conn.connection.readyState !== mongoose.ConnectionStates.connected) {
         throw new Error("MongoDB connection is not ready");
       }
     }

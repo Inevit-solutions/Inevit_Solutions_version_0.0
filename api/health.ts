@@ -17,7 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Try explicit connection if not connected
     let connectionResult = 'Skipped';
-    if (state !== 1) {
+    if (state !== mongoose.ConnectionStates.connected) {
         try {
             await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
             connectionResult = 'Success';
