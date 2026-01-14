@@ -10,4 +10,4 @@ const connectionSchema = new mongoose.Schema({
   submittedAt: { type: Date, default: Date.now },
 });
 
-export const Connection = mongoose.model('Connection', connectionSchema, 'Connections');
+export const Connection = (mongoose.models.Connection as mongoose.Model<any>) || mongoose.model('Connection', connectionSchema, 'Connections');

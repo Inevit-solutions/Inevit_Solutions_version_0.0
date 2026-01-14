@@ -13,4 +13,4 @@ const subscriberSchema = new mongoose.Schema({
   },
 });
 
-export const Subscriber = mongoose.model('Subscriber', subscriberSchema, 'Subscribers');
+export const Subscriber = (mongoose.models.Subscriber as mongoose.Model<any>) || mongoose.model('Subscriber', subscriberSchema, 'Subscribers');
