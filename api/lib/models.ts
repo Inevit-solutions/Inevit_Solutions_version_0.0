@@ -1,4 +1,4 @@
-import { getDatabase } from './mongodb';
+import { getDatabase } from './mongodb.js';
 import { Db, Collection } from 'mongodb';
 
 export interface Subscriber {

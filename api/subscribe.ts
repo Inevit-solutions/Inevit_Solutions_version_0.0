@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getSubscribersCollection } from './lib/models';
+import { getSubscribersCollection } from './lib/models.js';
 
 export default async function handler(
   request: VercelRequest,
