@@ -1,12 +1,12 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import connectDB from '../server/config/db';
-import { Subscriber } from '../server/models/Subscriber';
+import connectDB from './_lib/db';
+import { Subscriber } from './_lib/models';
 
 // Configure CORS
 const allowCors = (fn: any) => async (req: VercelRequest, res: VercelResponse) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Or allowed origin
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',

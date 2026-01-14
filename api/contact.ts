@@ -1,8 +1,7 @@
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import connectDB from '../server/config/db';
-import { Subscriber } from '../server/models/Subscriber';
-import { Connection } from '../server/models/Connection';
+import connectDB from './_lib/db';
+import { Subscriber, Connection } from './_lib/models';
 
 // Configure CORS
 const allowCors = (fn: any) => async (req: VercelRequest, res: VercelResponse) => {
