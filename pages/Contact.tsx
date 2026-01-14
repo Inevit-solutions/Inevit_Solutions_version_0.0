@@ -104,7 +104,7 @@ const Contact: React.FC = () => {
   };
 
   const copyEmail = () => {
-    navigator.clipboard.writeText("hello@ineveit.com");
+    navigator.clipboard.writeText("hello@inevit.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
@@ -296,7 +296,7 @@ const Contact: React.FC = () => {
                                     onClick={copyEmail}
                                     className="text-white hover:text-gold transition-colors flex items-center gap-2 font-mono"
                                  >
-                                    hello@ineveit.com 
+                                    hello@inevit.com 
                                     <span className="text-xs opacity-50">{copied ? 'Copied' : <Copy size={12} />}</span>
                                  </button>
                              </div>

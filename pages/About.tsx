@@ -20,7 +20,7 @@ const About: React.FC = () => {
                 animate={{ opacity: 1 }}
                 className="text-3xl md:text-5xl font-light leading-snug mb-12"
             >
-                Ineveit Solutions was founded on a simple observation: <br/>
+                Inevit Solutions was founded on a simple observation: <br/>
                 <span className="text-text-muted">Most businesses are drowning in work that machines should be doing.</span>
             </motion.h1>
             

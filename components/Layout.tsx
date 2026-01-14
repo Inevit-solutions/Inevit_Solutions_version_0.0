@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NAV_ITEMS, SOCIAL_LINKS } from '../constants';
 import { PageView } from '../types';
-import { Menu, X, ArrowUp, Send, Github, Twitter, Linkedin, Youtube, Globe, Instagram } from 'lucide-react';
+import { Menu, X, ArrowUp, Send, Github, Twitter, Linkedin, Youtube, Globe, Instagram, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
 
@@ -39,6 +39,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
   const newsletterRef = useRef<HTMLInputElement>(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleSubscribe = async () => {
     const email = newsletterRef.current?.value;
@@ -85,7 +86,8 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
         return;
       }
 
-      alert("System Synchronized. You are now subscribed.");
+      // Show success modal
+      setShowSuccessModal(true);
       if (newsletterRef.current) newsletterRef.current.value = "";
     } catch (error) {
       console.error('Subscription error:', error);
@@ -148,7 +150,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
              <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden">
                  <img 
                     src="/logo.png" 
-                    alt="Ineveit Logo" 
+                    alt="Inevit Logo" 
                     className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
                     onError={(e) => {
                       // Fallback if image fails
@@ -157,7 +159,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                     }}
                  />
              </div>
-            <span className="font-semibold tracking-wide text-sm md:text-base text-white group-hover:text-gold transition-colors duration-300">INEVEIT</span>
+            <span className="font-semibold tracking-wide text-sm md:text-base text-white group-hover:text-gold transition-colors duration-300">INEVIT</span>
           </button>
 
           {/* Center: Navigation Links (Absolute Centering) */}
@@ -259,7 +261,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
             {/* Brand Column */}
             <div className="md:col-span-4 space-y-8">
                <div>
-                  <h3 className="text-2xl font-bold text-white tracking-tight mb-2">INEVEIT SOLUTIONS</h3>
+                  <h3 className="text-2xl font-bold text-white tracking-tight mb-2">INEVIT SOLUTIONS</h3>
                   <p className="text-text-muted leading-relaxed">
                     Precision-engineered automation systems for businesses that value long-term reliability over quick fixes.
                   </p>
@@ -347,7 +349,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
           {/* Bottom Bar */}
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
              <p className="text-xs text-text-muted font-mono">
-               © {new Date().getFullYear()} Ineveit Solutions. All Systems Go.
+               © {new Date().getFullYear()} Inevit Solutions. All Systems Go.
              </p>
              <div className="flex gap-8 text-xs text-text-muted">
                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
@@ -370,6 +372,67 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
           >
             <ArrowUp size={20} className="group-hover:-translate-y-1 transition-transform" />
           </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Subscription Success Modal */}
+      <AnimatePresence>
+        {showSuccessModal && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowSuccessModal(false)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]"
+            />
+            
+            {/* Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="fixed inset-0 z-[101] flex items-center justify-center p-4"
+            >
+              <div className="relative max-w-md w-full bg-obsidian border border-gold/30 rounded-2xl p-8 shadow-2xl">
+                {/* Decorative corners */}
+                <div className="absolute -top-1 -left-1 w-4 h-4 border-t border-l border-gold/50"></div>
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b border-r border-gold/50"></div>
+                
+                {/* Content */}
+                <div className="text-center">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                    className="mb-6 flex justify-center"
+                  >
+                    <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center border border-gold/30">
+                      <CheckCircle size={32} className="text-gold" strokeWidth={1.5} />
+                    </div>
+                  </motion.div>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-3">
+                    You're In
+                  </h3>
+                  
+                  <div className="h-px w-16 bg-gold mx-auto mb-6"></div>
+                  
+                  <p className="text-text-secondary leading-relaxed mb-8">
+                    We'll send you engineering insights and system updates. No fluff, just signal.
+                  </p>
+                  
+                  <button
+                    onClick={() => setShowSuccessModal(false)}
+                    className="px-8 py-3 bg-white text-black font-semibold uppercase tracking-wider text-sm rounded hover:bg-gold transition-all duration-300 hover:shadow-[0_0_20px_rgba(244,180,0,0.4)]"
+                  >
+                    Understood
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 

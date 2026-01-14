@@ -43,7 +43,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </h1>
             
             <p className="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-14 leading-relaxed font-light">
-              Ineveit Solutions builds custom automation and AI infrastructure for businesses that have outgrown manual workflows.
+              Inevit Solutions builds custom automation and AI infrastructure for businesses that have outgrown manual workflows.
             </p>
             
             {/* CTA Buttons */}
@@ -176,7 +176,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                          </div>
 
                         <blockquote className="text-xl md:text-2xl font-light text-white leading-relaxed mb-8">
-                            "Ineveit didn't just automate our logistics; they <span className="text-gold font-normal">re-architected</span> our entire data philosophy. The ROI wasn't measured in months, but in <span className="italic border-b border-white/20">weeks</span>."
+                            "Inevit didn't just automate our logistics; they <span className="text-gold font-normal">re-architected</span> our entire data philosophy. The ROI wasn't measured in months, but in <span className="italic border-b border-white/20">weeks</span>."
                         </blockquote>
 
                         {/* Footer / Meta Data */}

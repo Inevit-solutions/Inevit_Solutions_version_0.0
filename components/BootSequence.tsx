@@ -13,7 +13,7 @@ const BootSequence: React.FC<BootSequenceProps> = ({ onComplete }) => {
   const [logIndex, setLogIndex] = useState(0);
 
   // "Text Decoding" effect state
-  const finalText = "INEVEIT SOLUTIONS";
+  const finalText = "INEVIT SOLUTIONS";
   const [displayText, setDisplayText] = useState("");
   
   const logs = [
