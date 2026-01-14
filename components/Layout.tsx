@@ -147,11 +147,11 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
             onClick={() => handleNavClick('home')} 
             className="flex items-center gap-3 group"
           >
-             <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden">
+             <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden rounded-full">
                  <img 
                     src="/Leo.png" 
                     alt="Inevit Logo" 
-                    className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover rounded-full transform group-hover:scale-110 transition-transform duration-500"
                     onError={(e) => {
                       // Fallback if image fails
                       e.currentTarget.style.display = 'none';
