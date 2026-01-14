@@ -13,6 +13,15 @@ export default async function handler(
     });
   }
 
+  // Check MongoDB URI first
+  if (!process.env.MONGODB_URI) {
+    console.error('MONGODB_URI is not set in environment variables');
+    return response.status(500).json({ 
+      error: 'Configuration error',
+      message: 'Server configuration error. MONGODB_URI is not set.' 
+    });
+  }
+
   try {
     const { name, email, organization, interest, message } = request.body;
 
@@ -73,18 +82,27 @@ export default async function handler(
 
   } catch (error: any) {
     console.error('Error in contact API:', error);
+    console.error('Error details:', {
+      message: error?.message,
+      name: error?.name,
+      stack: error?.stack?.substring(0, 200)
+    });
     
     // Check if it's a MongoDB connection error
-    if (error?.message?.includes('MONGODB_URI') || error?.message?.includes('connection')) {
+    if (error?.message?.includes('MONGODB_URI') || 
+        error?.message?.includes('connection') ||
+        error?.message?.includes('Database connection failed')) {
       return response.status(500).json({ 
         error: 'Database connection error',
-        message: 'Database is not available. Please check server configuration.' 
+        message: 'Unable to connect to database. Please check MONGODB_URI environment variable and MongoDB network access.',
+        details: process.env.NODE_ENV === 'development' ? error?.message : undefined
       });
     }
     
     return response.status(500).json({ 
       error: 'Internal server error',
-      message: 'Failed to submit contact form. Please try again later.' 
+      message: 'Failed to submit contact form. Please try again later.',
+      details: process.env.NODE_ENV === 'development' ? error?.message : undefined
     });
   }
 }
