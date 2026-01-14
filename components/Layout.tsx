@@ -55,7 +55,16 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
             body: JSON.stringify({ email })
         });
         
-        const data = await res.json();
+        const contentType = res.headers.get("content-type");
+        let data;
+        
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+             data = await res.json();
+        } else {
+             const text = await res.text();
+             console.error("Non-JSON response:", text);
+             throw new Error(`Server error (${res.status}). See console.`);
+        }
         
         if (res.ok) {
             alert(data.message || "System Synchronized. You are now subscribed.");
@@ -63,9 +72,9 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
         } else {
              alert(data.message || "Subscription failed. Please try again.");
         }
-    } catch (e) {
+    } catch (e: any) {
         console.error(e);
-        alert("Network error. Please check your connection.");
+        alert(`Transmission Error: ${e.message}`);
     } finally {
         setIsSubmitting(false);
     }
