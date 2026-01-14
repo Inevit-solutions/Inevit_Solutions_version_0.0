@@ -31,7 +31,13 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
   }
 
   try {
-    await connectDB();
+    // Connect to database first and ensure it's ready
+    const mongoose = await connectDB();
+    
+    // Ensure connection is ready before using models
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error('Database connection is not ready');
+    }
 
     // 1. Save Connection
     const newConnection = new Connection({
@@ -52,7 +58,13 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
 
     return res.status(201).json({ message: 'Transmission received' });
   } catch (error: any) {
-    console.error('Contact API Error:', error);
+    console.error('Contact API Error:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+      code: error.code,
+      error: error
+    });
     
     // Provide more specific error messages
     let errorMessage = 'A server error has occurred';
@@ -63,6 +75,10 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
       errorMessage = 'Database connection failed: Unable to reach MongoDB server. Please check network settings and IP whitelist.';
     } else if (error.message?.includes('duplicate key') || error.code === 11000) {
       errorMessage = 'This email has already been registered';
+    } else if (error.message?.includes('not ready')) {
+      errorMessage = 'Database connection is not ready. Please try again.';
+    } else if (error.message?.includes('Model') || error.message?.includes('model')) {
+      errorMessage = 'Database model error. Please check server logs.';
     } else if (error.message) {
       errorMessage = error.message;
     }
