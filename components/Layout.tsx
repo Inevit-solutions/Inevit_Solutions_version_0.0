@@ -151,7 +151,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                  <img 
                     src="/Leo_new.png" 
                     alt="Inevit Logo" 
-                    className="w-full h-full object-cover rounded-full transform group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover rounded-full"
                     style={{ backgroundColor: 'transparent' }}
                     onError={(e) => {
                       // Fallback if image fails
