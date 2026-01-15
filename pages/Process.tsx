@@ -31,7 +31,7 @@ const Process: React.FC = () => {
                         className={`flex flex-col md:flex-row gap-8 items-start ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
                     >
                         {/* Timeline Node */}
-                        <div className="hidden md:flex w-full md:w-1/2 justify-end items-center px-12 relative">
+                        <div className={`hidden md:flex w-full md:w-1/2 items-center px-12 relative ${idx % 2 === 0 ? 'justify-end' : ''}`}>
                              {/* Connector handled by absolute positioning in CSS if needed, purely layout here */}
                                 <motion.span 
                                     className="text-6xl font-bold font-mono block"
