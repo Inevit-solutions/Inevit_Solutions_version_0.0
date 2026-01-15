@@ -353,8 +353,8 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
                © {new Date().getFullYear()} Inevit Solutions. All Systems Go.
              </p>
              <div className="flex gap-8 text-xs text-text-muted">
-               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+               <button onClick={() => onNavigate('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
+               <button onClick={() => onNavigate('terms')} className="hover:text-white transition-colors">Terms of Service</button>
              </div>
           </div>
         </div>

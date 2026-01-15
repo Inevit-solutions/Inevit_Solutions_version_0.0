@@ -7,6 +7,8 @@ import Blog from './pages/Blog';
 
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import BootSequence from './components/BootSequence';
 import { PageView } from './types';
 import { AnimatePresence } from 'framer-motion';
@@ -30,6 +32,10 @@ function App() {
         return <About />;
       case 'contact':
         return <Contact />;
+      case 'privacy':
+        return <Privacy onNavigate={setCurrentPage} />;
+      case 'terms':
+        return <Terms onNavigate={setCurrentPage} />;
       default:
         return <Home onNavigate={setCurrentPage} />;
     }
