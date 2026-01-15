@@ -355,7 +355,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentPage, onNavigate }) =>
              <div className="flex gap-8 text-xs text-text-muted">
                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-               <a href="#" className="hover:text-white transition-colors">Sitemap</a>
              </div>
           </div>
         </div>

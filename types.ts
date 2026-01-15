@@ -1,4 +1,4 @@
-export type PageView = 'home' | 'work' | 'services' | 'process' | 'blog' | 'about' | 'contact';
+export type PageView = 'home' | 'work' | 'process' | 'blog' | 'about' | 'contact';
 
 export interface NavItem {
   id: PageView;
