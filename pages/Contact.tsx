@@ -104,7 +104,7 @@ const Contact: React.FC = () => {
   };
 
   const copyEmail = () => {
-    navigator.clipboard.writeText("hello@inevit.com");
+    navigator.clipboard.writeText("inevitsolutions.co@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
@@ -307,7 +307,7 @@ const Contact: React.FC = () => {
                              </div>
                              <div>
                                  <p className="text-xs text-text-muted uppercase tracking-wider mb-1">Base of Operations</p>
-                                 <p className="text-white">Bengaluru, KA / Remote Global</p>
+                                 <p className="text-white">Dhanbad, JH / Remote Global</p>
                              </div>
                         </li>
                      </ul>
