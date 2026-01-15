@@ -38,25 +38,25 @@ export const PROJECTS: Project[] = [
 
 export const SERVICES: Service[] = [
   {
-    id: 'strategy',
-    title: 'System Strategy',
-    description: 'We map your territory before building the roads. We identify where automation yields the highest leverage.',
-    problemSolved: 'Prevents building efficient solutions for the wrong problems.',
-    notFor: 'Teams looking for quick hacks or band-aid fixes.'
-  },
-  {
     id: 'automation',
-    title: 'Custom Automation',
-    description: 'Enterprise-grade workflows built on n8n and custom code. Robust error handling included by default.',
-    problemSolved: 'Eliminates repetitive, high-volume manual tasks.',
-    notFor: 'Simple Zapier tasks that don\'t require engineering.'
+    title: 'n8n Workflow Automation',
+    description: 'We design and build scalable, production-ready automation workflows using n8n and custom code. Every workflow is engineered for reliability, observability, and long-term maintainability — not fragile shortcuts.',
+    problemSolved: 'Eliminates repetitive, high-volume operational tasks and reduces human error across business processes.',
+    notFor: 'One-click Zapier-style automations that don\'t require engineering rigor.'
   },
   {
     id: 'ai',
-    title: 'AI Integration',
-    description: 'Context-aware AI agents that read, route, and reason over your business data.',
-    problemSolved: 'Unlocks value from unstructured data (docs, emails, chats).',
-    notFor: 'Generic chatbots without business context.'
+    title: 'RAG-Based AI Chatbots',
+    description: 'We build Retrieval-Augmented Generation (RAG) chatbots that ground AI responses in your private data — documents, databases, APIs, and internal knowledge systems. Designed for accuracy, security, and real-world usage.',
+    problemSolved: 'Prevents hallucinations and enables reliable, context-aware AI answers from proprietary data.',
+    notFor: 'Generic chatbots trained only on public data with no factual grounding.'
+  },
+  {
+    id: 'strategy',
+    title: 'AI System Architecture & Strategy',
+    description: 'Before writing code, we design the system. Through a dedicated strategy call, we analyze your goals, data, scale, and constraints — then recommend a clear, future-proof AI system architecture tailored to your business.',
+    problemSolved: 'Prevents over-engineering, wasted AI spend, and poorly designed systems that don\'t scale.',
+    notFor: 'Teams looking for quick AI integrations without strategic planning.'
   }
 ];
 
