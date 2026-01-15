@@ -296,7 +296,7 @@ const Contact: React.FC = () => {
                                     onClick={copyEmail}
                                     className="text-white hover:text-gold transition-colors flex items-center gap-2 font-mono"
                                  >
-                                    hello@inevit.com 
+                                    inevitsolutions.co@gmail.com 
                                     <span className="text-xs opacity-50">{copied ? 'Copied' : <Copy size={12} />}</span>
                                  </button>
                              </div>
