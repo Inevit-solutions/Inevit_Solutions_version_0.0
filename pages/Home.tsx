@@ -46,8 +46,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               Inevit Solutions builds custom automation and AI infrastructure for businesses that have outgrown manual workflows.
             </p>
             
-            {/* CTA Buttons */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+            {/* CTA Button */}
+            <div className="flex items-center justify-center">
               <button 
                 onClick={() => onNavigate('contact')}
                 className="group relative px-8 py-4 bg-white text-black font-medium hover:bg-gold transition-all duration-300 w-full md:w-auto overflow-hidden rounded-sm"
@@ -55,12 +55,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <span className="relative z-10 flex items-center gap-2">
                   Start Conversation <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
-              </button>
-              <button 
-                onClick={() => onNavigate('work')}
-                className="px-8 py-4 border border-white/20 text-white hover:border-gold hover:text-gold transition-colors duration-300 w-full md:w-auto rounded-sm backdrop-blur-sm bg-black/20"
-              >
-                View Selected Work
               </button>
             </div>
           </motion.div>

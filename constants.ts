@@ -1,7 +1,7 @@
 import { NavItem, Project, Service, ProcessStep, BlogPost, Video, SocialLink } from './types';
 
 export const NAV_ITEMS: NavItem[] = [
-  { id: 'work', label: 'Work' },
+  { id: 'services', label: 'Services' },
   { id: 'process', label: 'Process' },
   { id: 'blog', label: 'Blog' },
 
