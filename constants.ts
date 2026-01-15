@@ -100,8 +100,8 @@ export const BLOG_POSTS: BlogPost[] = [
   },
     {
     id: '2',
-    title: 'The “Automate Everything” Trap',
-    excerpt: '3 Processes You Should Keep Human.',
+    title: 'Why “Automate Everything” Is a Dangerous Strategy in 2026',
+    excerpt: 'Automation scales efficiency — but neglecting human touch creates relational debt, erodes trust, and hurts long-term business outcomes',
     date: '2026-12-1',
     readTime: '6 min read',
     link: 'https://medium.com/@inevitsolutions.co/the-automate-everything-trap-595edb91349e',
